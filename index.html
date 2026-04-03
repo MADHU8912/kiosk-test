@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kiosk Dashboard</title>
+  <title>Office Kiosk Dashboard</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,8 +13,8 @@
     }
 
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
+      background: #0f172a;
+      color: #ffffff;
       min-height: 100vh;
     }
 
@@ -22,54 +22,64 @@
       display: none;
     }
 
-    .center-screen {
+    .login-page {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       padding: 20px;
     }
 
     .login-box {
-      width: 360px;
-      background: rgba(30, 41, 59, 0.95);
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      width: 380px;
+      background: rgba(30, 41, 59, 0.98);
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
     }
 
     .login-box h1 {
       text-align: center;
-      margin-bottom: 12px;
       color: #38bdf8;
+      margin-bottom: 10px;
+      font-size: 30px;
     }
 
     .login-box p {
       text-align: center;
-      margin-bottom: 20px;
       color: #cbd5e1;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .login-box label {
+      display: block;
+      margin-bottom: 6px;
+      color: #e2e8f0;
+      font-size: 14px;
     }
 
     .login-box input {
       width: 100%;
       padding: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       border: none;
       border-radius: 10px;
       outline: none;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .login-box button {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       border: none;
       border-radius: 10px;
       background: #22c55e;
       color: white;
       font-size: 16px;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .login-box button:hover {
@@ -77,52 +87,64 @@
     }
 
     .msg {
+      margin-top: 14px;
       text-align: center;
-      margin-top: 12px;
       color: #facc15;
       min-height: 20px;
+      font-size: 14px;
     }
 
     .dashboard {
+      min-height: 100vh;
       padding: 20px;
+      background: #0f172a;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.85);
-      padding: 16px 20px;
-      border-radius: 14px;
-      margin-bottom: 20px;
+      gap: 15px;
       flex-wrap: wrap;
-      gap: 10px;
+      background: #1e293b;
+      padding: 18px 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
 
-    .topbar h2 {
+    .topbar-left h2 {
       color: #38bdf8;
+      font-size: 28px;
+      margin-bottom: 5px;
     }
 
-    .topbar .right {
+    .topbar-left p {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .topbar-right {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .time-box {
-      background: #1e293b;
+      background: #0f172a;
+      color: #e2e8f0;
       padding: 10px 14px;
       border-radius: 10px;
-      color: #e2e8f0;
       font-weight: bold;
+      border: 1px solid #334155;
     }
 
     .logout-btn {
       background: #ef4444;
-      border: none;
       color: white;
-      padding: 10px 14px;
+      border: none;
+      padding: 10px 16px;
       border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
@@ -134,26 +156,28 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
       margin-bottom: 20px;
     }
 
     .card {
-      background: rgba(30, 41, 59, 0.95);
+      background: #1e293b;
       padding: 20px;
       border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      border: 1px solid #334155;
     }
 
     .card h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
       color: #cbd5e1;
+      font-size: 15px;
+      margin-bottom: 10px;
+      font-weight: normal;
     }
 
-    .card .big {
-      font-size: 30px;
+    .big-number {
+      font-size: 32px;
       font-weight: bold;
       color: #22c55e;
     }
@@ -174,23 +198,28 @@
     }
 
     .panel {
-      background: rgba(30, 41, 59, 0.95);
+      background: #1e293b;
       padding: 20px;
       border-radius: 16px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      border: 1px solid #334155;
     }
 
     .panel h3 {
-      margin-bottom: 15px;
       color: #38bdf8;
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 10px;
+      min-width: 700px;
     }
 
     th, td {
@@ -201,8 +230,8 @@
     }
 
     th {
-      color: #93c5fd;
       background: #0f172a;
+      color: #93c5fd;
     }
 
     tr:hover {
@@ -212,8 +241,9 @@
     .footer {
       text-align: center;
       color: #94a3b8;
-      padding: 10px;
       margin-top: 10px;
+      font-size: 13px;
+      padding-bottom: 10px;
     }
 
     @media (max-width: 700px) {
@@ -222,197 +252,219 @@
         align-items: flex-start;
       }
 
-      .topbar .right {
+      .topbar-right {
         width: 100%;
         justify-content: space-between;
+      }
+
+      .login-box {
+        width: 100%;
+        max-width: 380px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div id="loginScreen" class="center-screen">
+  <!-- Login Page -->
+  <div id="loginPage" class="login-page">
     <div class="login-box">
       <h1>Office Kiosk</h1>
-      <p>Employee Login Dashboard</p>
-      <input type="text" id="empid" placeholder="Employee ID" />
-      <input type="password" id="password" placeholder="Password" />
+      <p>Employee Login System</p>
+
+      <label for="empid">Employee ID</label>
+      <input type="text" id="empid" placeholder="Enter Employee ID" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter Password" />
+
       <button onclick="login()">Login</button>
       <div class="msg" id="msg"></div>
     </div>
   </div>
 
-  <div id="dashboardScreen" class="dashboard hidden">
+  <!-- Dashboard -->
+  <div id="dashboardPage" class="dashboard hidden">
     <div class="topbar">
-      <div>
-        <h2>Kiosk Admin Dashboard</h2>
-        <div>Welcome, <span id="userName">Admin</span></div>
+      <div class="topbar-left">
+        <h2>Admin Dashboard</h2>
+        <p>Welcome, <span id="loggedUser">Admin</span></p>
       </div>
-      <div class="right">
-        <div class="time-box" id="dateTime">Loading time...</div>
+
+      <div class="topbar-right">
+        <div class="time-box" id="liveTime">Loading...</div>
         <button class="logout-btn" onclick="logout()">Logout</button>
       </div>
     </div>
 
+    <!-- Employee + System Cards -->
     <div class="grid">
       <div class="card">
         <h3>Total Employees</h3>
-        <div class="big">148</div>
+        <div class="big-number">148</div>
       </div>
+
       <div class="card">
         <h3>Checked In Today</h3>
-        <div class="big">96</div>
+        <div class="big-number">96</div>
       </div>
+
       <div class="card">
         <h3>Visitors Today</h3>
-        <div class="big">12</div>
+        <div class="big-number">12</div>
       </div>
+
       <div class="card">
         <h3>System Health</h3>
-        <div class="big status-good">ONLINE</div>
+        <div class="big-number status-good">ONLINE</div>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>GitHub Status</h3>
-        <div class="status-good">Connected</div>
-      </div>
-      <div class="card">
-        <h3>Jenkins Build</h3>
-        <div class="status-good">Success</div>
-      </div>
-      <div class="card">
-        <h3>Docker Container</h3>
-        <div class="status-good">Running</div>
-      </div>
-      <div class="card">
-        <h3>Last Deploy</h3>
-        <div class="status-warn">5 min ago</div>
+    <!-- DevOps Status -->
+    <div class="panel">
+      <h3>DevOps Tool Status</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CMD</td>
+              <td class="status-good">Working</td>
+              <td>Command execution ready</td>
+            </tr>
+            <tr>
+              <td>Git</td>
+              <td class="status-good">Connected</td>
+              <td>Local repository active</td>
+            </tr>
+            <tr>
+              <td>GitHub</td>
+              <td class="status-good">Synced</td>
+              <td>Remote repository available</td>
+            </tr>
+            <tr>
+              <td>Jenkins</td>
+              <td class="status-good">Running</td>
+              <td>Pipeline last build success</td>
+            </tr>
+            <tr>
+              <td>VS Code</td>
+              <td class="status-good">Ready</td>
+              <td>Project editing environment ready</td>
+            </tr>
+            <tr>
+              <td>Docker</td>
+              <td class="status-good">Running</td>
+              <td>Container active on server</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
+    <!-- Activity Table -->
     <div class="panel">
       <h3>Recent Employee Activity</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Employee ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>EMP101</td>
-            <td>Ravi Kumar</td>
-            <td class="status-good">Checked In</td>
-            <td>09:05 AM</td>
-          </tr>
-          <tr>
-            <td>EMP102</td>
-            <td>Anitha</td>
-            <td class="status-good">Checked In</td>
-            <td>09:12 AM</td>
-          </tr>
-          <tr>
-            <td>EMP103</td>
-            <td>Suresh</td>
-            <td class="status-warn">Break</td>
-            <td>11:20 AM</td>
-          </tr>
-          <tr>
-            <td>EMP104</td>
-            <td>Madhu</td>
-            <td class="status-good">Checked In</td>
-            <td>09:00 AM</td>
-          </tr>
-          <tr>
-            <td>EMP105</td>
-            <td>Priya</td>
-            <td class="status-bad">Absent</td>
-            <td>--</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="panel">
-      <h3>DevOps Pipeline Summary</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Tool</th>
-            <th>Status</th>
-            <th>Info</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>CMD</td>
-            <td class="status-good">Working</td>
-            <td>Used for build commands</td>
-          </tr>
-          <tr>
-            <td>Git</td>
-            <td class="status-good">Working</td>
-            <td>Local version control ready</td>
-          </tr>
-          <tr>
-            <td>GitHub</td>
-            <td class="status-good">Connected</td>
-            <td>Repository synced</td>
-          </tr>
-          <tr>
-            <td>Jenkins</td>
-            <td class="status-good">Running</td>
-            <td>Pipeline build success</td>
-          </tr>
-          <tr>
-            <td>Docker</td>
-            <td class="status-good">Running</td>
-            <td>Container active on port</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Department</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EMP101</td>
+              <td>Ravi Kumar</td>
+              <td class="status-good">Checked In</td>
+              <td>IT</td>
+              <td>09:05 AM</td>
+            </tr>
+            <tr>
+              <td>EMP102</td>
+              <td>Anitha</td>
+              <td class="status-good">Checked In</td>
+              <td>HR</td>
+              <td>09:12 AM</td>
+            </tr>
+            <tr>
+              <td>EMP103</td>
+              <td>Suresh</td>
+              <td class="status-warn">Break</td>
+              <td>Support</td>
+              <td>11:20 AM</td>
+            </tr>
+            <tr>
+              <td>EMP104</td>
+              <td>Madhu</td>
+              <td class="status-good">Checked In</td>
+              <td>DevOps</td>
+              <td>09:00 AM</td>
+            </tr>
+            <tr>
+              <td>EMP105</td>
+              <td>Priya</td>
+              <td class="status-bad">Absent</td>
+              <td>Finance</td>
+              <td>--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="footer">
-      Office Kiosk Dashboard | Test Project using CMD, Git, GitHub, Jenkins, VS Code, Docker
+      Office Kiosk Dashboard | CMD + Git + GitHub + Jenkins + VS Code + Docker
     </div>
   </div>
 
   <script>
     function login() {
-      const empid = document.getElementById("empid").value;
-      const password = document.getElementById("password").value;
+      const empid = document.getElementById("empid").value.trim();
+      const password = document.getElementById("password").value.trim();
       const msg = document.getElementById("msg");
 
       if (empid === "admin" && password === "1234") {
-        document.getElementById("loginScreen").classList.add("hidden");
-        document.getElementById("dashboardScreen").classList.remove("hidden");
-        document.getElementById("userName").innerText = empid;
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("dashboardPage").classList.remove("hidden");
+        document.getElementById("loggedUser").innerText = empid;
+        msg.innerText = "";
       } else {
-        msg.innerText = "Invalid ID or Password";
+        msg.innerText = "Invalid Employee ID or Password";
       }
     }
 
     function logout() {
-      document.getElementById("dashboardScreen").classList.add("hidden");
-      document.getElementById("loginScreen").classList.remove("hidden");
-      document.getElementById("msg").innerText = "";
+      document.getElementById("dashboardPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.remove("hidden");
       document.getElementById("empid").value = "";
       document.getElementById("password").value = "";
+      document.getElementById("msg").innerText = "";
     }
 
     function updateTime() {
       const now = new Date();
-      document.getElementById("dateTime").innerText = now.toLocaleString();
+      document.getElementById("liveTime").innerText = now.toLocaleString();
     }
 
     setInterval(updateTime, 1000);
     updateTime();
+
+    document.getElementById("password").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        login();
+      }
+    });
   </script>
 </body>
 </html>
