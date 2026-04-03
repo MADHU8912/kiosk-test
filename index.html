@@ -1,76 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Office Kiosk Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kiosk Dashboard</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: #0f172a;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: white;
+      min-height: 100vh;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .center-screen {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      padding: 20px;
     }
-    .box {
-      background: #1e293b;
+
+    .login-box {
+      width: 360px;
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 16px;
       padding: 30px;
-      border-radius: 12px;
-      width: 320px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
-    h1 {
+
+    .login-box h1 {
+      text-align: center;
+      margin-bottom: 12px;
+      color: #38bdf8;
+    }
+
+    .login-box p {
       text-align: center;
       margin-bottom: 20px;
+      color: #cbd5e1;
     }
-    input {
+
+    .login-box input {
       width: 100%;
-      padding: 10px;
-      margin: 8px 0;
+      padding: 12px;
+      margin-bottom: 14px;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
     }
-    button {
+
+    .login-box button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
       background: #22c55e;
-      border: none;
       color: white;
       font-size: 16px;
-      border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
     }
+
+    .login-box button:hover {
+      background: #16a34a;
+    }
+
     .msg {
-      margin-top: 15px;
       text-align: center;
+      margin-top: 12px;
+      color: #facc15;
+      min-height: 20px;
+    }
+
+    .dashboard {
+      padding: 20px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 16px 20px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .topbar h2 {
+      color: #38bdf8;
+    }
+
+    .topbar .right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .time-box {
+      background: #1e293b;
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      background: #ef4444;
+      border: none;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background: #dc2626;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.95);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #cbd5e1;
+    }
+
+    .card .big {
+      font-size: 30px;
+      font-weight: bold;
+      color: #22c55e;
+    }
+
+    .status-good {
+      color: #22c55e;
+      font-weight: bold;
+    }
+
+    .status-warn {
+      color: #facc15;
+      font-weight: bold;
+    }
+
+    .status-bad {
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .panel {
+      background: rgba(30, 41, 59, 0.95);
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .panel h3 {
+      margin-bottom: 15px;
+      color: #38bdf8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+      font-size: 14px;
+    }
+
+    th {
       color: #93c5fd;
+      background: #0f172a;
+    }
+
+    tr:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .footer {
+      text-align: center;
+      color: #94a3b8;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar .right {
+        width: 100%;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Office Kiosk</h1>
-    <input type="text" id="empid" placeholder="Employee ID">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div class="msg" id="msg"></div>
+
+  <div id="loginScreen" class="center-screen">
+    <div class="login-box">
+      <h1>Office Kiosk</h1>
+      <p>Employee Login Dashboard</p>
+      <input type="text" id="empid" placeholder="Employee ID" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+
+  <div id="dashboardScreen" class="dashboard hidden">
+    <div class="topbar">
+      <div>
+        <h2>Kiosk Admin Dashboard</h2>
+        <div>Welcome, <span id="userName">Admin</span></div>
+      </div>
+      <div class="right">
+        <div class="time-box" id="dateTime">Loading time...</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Total Employees</h3>
+        <div class="big">148</div>
+      </div>
+      <div class="card">
+        <h3>Checked In Today</h3>
+        <div class="big">96</div>
+      </div>
+      <div class="card">
+        <h3>Visitors Today</h3>
+        <div class="big">12</div>
+      </div>
+      <div class="card">
+        <h3>System Health</h3>
+        <div class="big status-good">ONLINE</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>GitHub Status</h3>
+        <div class="status-good">Connected</div>
+      </div>
+      <div class="card">
+        <h3>Jenkins Build</h3>
+        <div class="status-good">Success</div>
+      </div>
+      <div class="card">
+        <h3>Docker Container</h3>
+        <div class="status-good">Running</div>
+      </div>
+      <div class="card">
+        <h3>Last Deploy</h3>
+        <div class="status-warn">5 min ago</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Recent Employee Activity</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EMP101</td>
+            <td>Ravi Kumar</td>
+            <td class="status-good">Checked In</td>
+            <td>09:05 AM</td>
+          </tr>
+          <tr>
+            <td>EMP102</td>
+            <td>Anitha</td>
+            <td class="status-good">Checked In</td>
+            <td>09:12 AM</td>
+          </tr>
+          <tr>
+            <td>EMP103</td>
+            <td>Suresh</td>
+            <td class="status-warn">Break</td>
+            <td>11:20 AM</td>
+          </tr>
+          <tr>
+            <td>EMP104</td>
+            <td>Madhu</td>
+            <td class="status-good">Checked In</td>
+            <td>09:00 AM</td>
+          </tr>
+          <tr>
+            <td>EMP105</td>
+            <td>Priya</td>
+            <td class="status-bad">Absent</td>
+            <td>--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>DevOps Pipeline Summary</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Status</th>
+            <th>Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CMD</td>
+            <td class="status-good">Working</td>
+            <td>Used for build commands</td>
+          </tr>
+          <tr>
+            <td>Git</td>
+            <td class="status-good">Working</td>
+            <td>Local version control ready</td>
+          </tr>
+          <tr>
+            <td>GitHub</td>
+            <td class="status-good">Connected</td>
+            <td>Repository synced</td>
+          </tr>
+          <tr>
+            <td>Jenkins</td>
+            <td class="status-good">Running</td>
+            <td>Pipeline build success</td>
+          </tr>
+          <tr>
+            <td>Docker</td>
+            <td class="status-good">Running</td>
+            <td>Container active on port</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      Office Kiosk Dashboard | Test Project using CMD, Git, GitHub, Jenkins, VS Code, Docker
+    </div>
   </div>
 
   <script>
     function login() {
-      const empid = document.getElementById('empid').value;
-      const password = document.getElementById('password').value;
-      const msg = document.getElementById('msg');
+      const empid = document.getElementById("empid").value;
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("msg");
 
       if (empid === "admin" && password === "1234") {
-        msg.innerText = "Login Successful";
+        document.getElementById("loginScreen").classList.add("hidden");
+        document.getElementById("dashboardScreen").classList.remove("hidden");
+        document.getElementById("userName").innerText = empid;
       } else {
         msg.innerText = "Invalid ID or Password";
       }
     }
+
+    function logout() {
+      document.getElementById("dashboardScreen").classList.add("hidden");
+      document.getElementById("loginScreen").classList.remove("hidden");
+      document.getElementById("msg").innerText = "";
+      document.getElementById("empid").value = "";
+      document.getElementById("password").value = "";
+    }
+
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("dateTime").innerText = now.toLocaleString();
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
   </script>
 </body>
 </html>
